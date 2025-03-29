@@ -14,5 +14,5 @@ class MyApp(App):
         return layout
 
 
-app = MyApp()xcvbnm,./
+app = MyApp()
 app.run()
