@@ -1,0 +1,186 @@
+<MainScreen>:
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            id: Score_lbl
+            text: '0'
+        FloatLayout:
+            Image:
+                id: click
+                size_hint: 0.5,1
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                source: "click.png"
+            Button:
+                size_hint: 0.5,1
+                background_color: 1,0,0,0
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_press: root.click()
+                on_release: root.unclick()
+        FloatLayout:
+            Image:
+                size_hint: 0.5,1
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                source: "shop.png"
+            Button:
+                size_hint: 0.5,1
+                background_color: 1,0,0,0
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_press: root.on_shop_screen()
+
+<MenuScreen>:
+    BoxLayout:
+        orientation: "vertical" 
+    Image:
+        size_hint: 0.25,0.5
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        source: "mainscreen.png"
+    FloatLayout:
+            Image:
+                id: start
+                size_hint: 0.25,0.25
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                source: "start.png"
+            Button:
+                size_hint: 0.25,0.5
+                background_color: 1,0,0,0
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_press: root.on_main_screen()
+    FloatLayout:
+            Image:
+                id: sett
+                size_hint: 0.25,0.5
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                source: "setting.png"
+            Button:
+                size_hint: 0.25,0.5
+                background_color: 1,0,0,0
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_press: root.click()
+                on_release: root.unclick()
+
+<ShopScreen>:
+    FloatLayout:
+        Image:
+            source: "wood.jpg"
+            allow_strech: True
+            keep_ratio: False
+        BoxLayout:
+            orientation: "vertical"
+            BoxLayout:
+                orientation:'horisontal'
+                size_hint: 1,0.2
+                Button:
+                    text: 'назад'
+                    size_hint: 0.5,1
+                    background_color: 1,0,0,0.5
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_press: root.on_main_screen()
+                Label:
+                    id: money
+                    text: "0"
+            ScrollView:
+                size_hint_y: None
+                size_hint:1,1
+                GridLayout:
+                    id: shopItems
+                    size_hint_y: None
+                    height: self.minimum_height
+                    cols:1
+                    row_default_height: 100
+                    FloatLayout:
+                        Button:
+                            size_hint: 1,1
+                            background_color: 0,0,0,0.5
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            on_press: root.buy(100, 10)
+
+                        Image:
+                            size_hint: 1,1
+                            pos_hint: {"x": 0, "center_y": 0.5}
+                            source: "sun.png"
+                        Label:
+                            text: "+10"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        Label:
+                            text: "10"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    FloatLayout:
+                        Button:
+                            size_hint: 1,1
+                            background_color: 0,0,0,0.5
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            on_press: root.buy(1000, 100)
+
+                        Image:
+                            size_hint: 1,1
+                            pos_hint: {"x": 0, "center_y": 0.5}
+                            source: "fire.png"
+                        Label:
+                            text: "+100"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        Label:
+                            text: "1000"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    FloatLayout:
+                        Button:
+                            size_hint: 1,1
+                            background_color: 0,0,0,0.5
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            on_press: root.buy(10000, 1000)
+
+                        Image:
+                            size_hint: 1,1
+                            pos_hint: {"x": 0, "center_y": 0.5}
+                            source: "lightning.png"
+                        Label:
+                            text: "+1000"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        Label:
+                            text: "10000"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    FloatLayout:
+                        Button:
+                            size_hint: 1,1
+                            background_color: 0,0,0,0.5
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            on_press: root.buy(100000, 10000)
+
+                        Image:
+                            size_hint: 1,1
+                            pos_hint: {"x": 0, "center_y": 0.5}
+                            source: "water.png"
+                        Label:
+                            text: "+10000"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        Label:
+                            text: "100000"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    FloatLayout:
+                        Button:
+                            size_hint: 1,1
+                            background_color: 0,0,0,0.5
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            on_press: root.buy(1000000, 100000)
+
+                        Image:
+                            size_hint: 1,1
+                            pos_hint: {"x": 0, "center_y": 0.5}
+                            source: "wind.png"
+                        Label:
+                            text: "+100000"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        Label:
+                            text: "1000000"
+                            size_hint: 1,1
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
