@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Кошик - Steam Store{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🛒 Ваш кошик</h1>
+    <p>Товарів у кошику: {{ cart_count }}</p>
+</div>
+
+{% if games %}
+<div class="cart-container">
+    <div class="cart-items">
+        {% for game in games %}
+        <div class="cart-item">
+            <div class="cart-item-image">
+                <img src="/static/images/{{ game.image }}" 
+                     alt="{{ game.title }}"
+                     onerror="this.parentElement.innerHTML='<div class=cart-placeholder>📷</div>'">
+            </div>
+            <div class="cart-item-info">
+                <h3 class="cart-item-title">{{ game.title }}</h3>
+                <div class="cart-item-tags">
+                    {% for tag in game.tags %}
+                    <span class="tag-small">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="cart-item-price">
+                {% if game.discount > 0 %}
+                <span class="discount-badge">-{{ game.discount }}%</span>
+                {% endif %}
+                <span class="cart-price">{{ game.current_price }} ₴</span>
+            </div>
+            <form method="POST" action="/remove-from-cart/{{ game.id }}" class="cart-item-remove">
+                <button type="submit" class="remove-button">✕</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+        <div class="summary-card">
+            <h2 class="summary-title">Підсумок замовлення</h2>
+            <div class="summary-row">
+                <span>Товарів:</span>
+                <span>{{ cart_count }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Ваш баланс:</span>
+                <span class="balance-amount">{{ balance }} ₴</span>
+            </div>
+            <div class="summary-row summary-total">
+                <span>До сплати:</span>
+                <span class="total-price">{{ total }} ₴</span>
+            </div>
+            
+            {% if balance >= total %}
+            <form method="POST" action="/checkout">
+                <button type="submit" class="checkout-button">💳 Оплатити ({{ total }} ₴)</button>
+            </form>
+            {% else %}
+            <button class="checkout-button disabled" disabled>❌ Недостатньо коштів</button>
+            <p class="insufficient-funds">Бракує {{ total - balance }} ₴</p>
+            {% endif %}
+            
+            <form method="POST" action="/clear-cart">
+                <button type="submit" class="clear-cart-button">Очистити кошик</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="empty-cart">
+    <div class="empty-cart-icon">🛒</div>
+    <h2>Ваш кошик порожній</h2>
+    <p>Додайте ігри зі сторінки магазину</p>
+    <a href="/" class="back-to-store">Повернутися до магазину</a>
+</div>
+{% endif %}
+{% endblock %}
