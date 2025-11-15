@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Steam Store - Головна{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>🎮 Магазин ігор Steam</h1>
+    <p>Знижки на найкращі ігри</p>
+    
+    <!-- Форма поповнення балансу -->
+    <div class="balance-top-up">
+        <form method="POST" action="/add-balance" class="top-up-form">
+            <input type="number" name="amount" placeholder="Сума (₴)" min="1" max="10000" required class="top-up-input">
+            <button type="submit" class="top-up-button">💳 Поповнити баланс</button>
+        </form>
+    </div>
+</div>
+
+<div class="products-container">
+    {% for game in games %}
+    <div class="product-card {% if game.id in purchased_ids %}purchased-game{% endif %}">
+        <div class="product-image">
+            <img src="/static/images/{{ game.image }}" 
+                 alt="{{ game.title }}"
+                 onerror="this.parentElement.innerHTML='<div class=image-placeholder>📷 {{ game.title }}</div>'">
+        </div>
+        <div class="product-info">
+            <h2 class="product-title">{{ game.title }}</h2>
+            <p class="product-description">{{ game.description }}</p>
+            
+            <div class="product-tags">
+                {% for tag in game.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="product-footer">
+                <div class="price">
+                    {% if game.discount > 0 %}
+                    <span class="discount">-{{ game.discount }}%</span>
+                    <div class="price-info">
+                        <span class="original-price">{{ game.original_price }} ₴</span>
+                        <span class="current-price">{{ game.current_price }} ₴</span>
+                    </div>
+                    {% elif game.current_price == 0 %}
+                    <div class="price-info">
+                        <span class="current-price">Безкоштовно</span>
+                    </div>
+                    {% else %}
+                    <div class="price-info">
+                        <span class="current-price">{{ game.current_price }} ₴</span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if game.id in purchased_ids %}
+                <button class="buy-button purchased-button" disabled>✓ У бібліотеці</button>
+                {% else %}
+                <form method="POST" action="/add-to-cart/{{ game.id }}">
+                    <button type="submit" class="buy-button">Додати в кошик</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Кнопка скидання (для тестування) -->
+<div class="reset-section">
+    <form method="POST" action="/reset" onsubmit="return confirm('Скинути всі дані?');">
+        <button type="submit" class="reset-button">🔄 Скинути дані (тест)</button>
+    </form>
+</div>
+{% endblock %}

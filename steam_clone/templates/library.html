@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Бібліотека - Steam Store{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>📚 Моя бібліотека</h1>
+    <p>Куплено ігор: {{ games|length }}</p>
+</div>
+
+{% if games %}
+<div class="products-container">
+    {% for game in games %}
+    <div class="product-card library-game">
+        <div class="product-image">
+            <img src="/static/images/{{ game.image }}" 
+                 alt="{{ game.title }}"
+                 onerror="this.parentElement.innerHTML='<div class=image-placeholder>📷 {{ game.title }}</div>'">
+            <div class="owned-badge">✓ У ВЛАСНОСТІ</div>
+        </div>
+        <div class="product-info">
+            <h2 class="product-title">{{ game.title }}</h2>
+            <p class="product-description">{{ game.description }}</p>
+            
+            <div class="product-tags">
+                {% for tag in game.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="product-footer">
+                <div class="price">
+                    <div class="price-info">
+                        <span class="current-price">Куплено</span>
+                    </div>
+                </div>
+                <button class="buy-button play-button">▶ Грати</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-cart">
+    <div class="empty-cart-icon">📚</div>
+    <h2>Ваша бібліотека порожня</h2>
+    <p>Купіть ігри в магазині!</p>
+    <a href="/" class="back-to-store">Перейти до магазину</a>
+</div>
+{% endif %}
+{% endblock %}

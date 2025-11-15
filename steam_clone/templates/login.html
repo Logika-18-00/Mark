@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід - Steam Store</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="register">
+            <div class="register__content-logo">
+                <img src="https://help.steampowered.com/public/shared/images/responsive/header_logo.png" alt="login" class="register__logo">
+            </div>
+
+            <!-- Flash повідомлення для помилок -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}" style="position:relative;top:0;transform:none;margin-bottom:15px;">
+                        <div class="flash-content">
+                            <span class="flash-text">{{ message }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="register__container-log">
+                <form method="POST" action="/login" class="register__login-form">
+                    <label for="username" class="login-form__label login-form__label--one">УВІЙДІТЬ, ВИКОРИСТАВШИ ІМ'Я ВАШОГО ОБЛІКОВОГО ЗАПИСУ
+                        <input type="text" id="username" name="username" class="login-form__input" required>
+                    </label>
+                    <label for="password" class="login-form__label login-form__label--two">ПАРОЛЬ
+                        <input type="password" id="password" name="password" class="login-form__input" required>
+                    </label>
+                    <div>
+                        <input type="checkbox" id="remember" name="remember" class="login-form__checkbox">
+                        <label for="remember" class="login-form__checkbox-label">Запам'ятати</label>
+                    </div>
+                    <button type="submit" class="btn btn--login">Увійти</button>
+                </form>
+                <div class="register__qr-content">
+                    <p class="qr-content__title">АБО ЗА ДОПОМОГОЮ QR-КОДУ</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png" alt="qr" class="qr-content__qr">
+                    <p class="qr-content__parr">Використовуйте <a href="#" class="qr-content__link">Мобільний додаток Steam</a> для входу за допомогою QR-коду</p>
+                </div>
+            </div>
+
+            <div class="register__links">
+                <div class="links__option links__option--help">
+                    <a href="#" class="qr-content__link">Допомога, я не можу увійти</a>
+                </div>
+                <div class="links__option links__option--create">
+                    <span class="links__option--text">Немає акаунта?</span>
+                    <a href="#" class="qr-content__link">Створити акаунт</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Підказка з тестовими акаунтами (видаліть в продакшені) -->
+    <div class="test-accounts">
+        <h3>🔑 Тестові акаунти:</h3>
+        <p>admin / password123</p>
+        <p>user1 / 123456</p>
+        <p>gamer / qwerty</p>
+    </div>
+</body>
+</html>
